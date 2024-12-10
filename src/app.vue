@@ -9,7 +9,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { onKeyStroke } from '@vueuse/core';
 import { init } from './use/synth';
 
-
 const { midi } = useMidi()
 const route = useRoute()
 const router = useRouter()
@@ -37,12 +36,6 @@ const background = computed(() => `linear-gradient(${angle.value * 360}deg, ${co
 const { visual, width, height } = useScene()
 
 const changed = ref(false)
-
-watch(() => midi.total.hits, hits => {
-  if (hits == 0) {
-    router.push(randomScene())
-  }
-})
 
 onKeyStroke([' ', 'Enter'], () => {
   init()
@@ -108,13 +101,9 @@ onMounted(() => {
         v-tooltip.right="scene.name.charAt(0).toUpperCase() + scene.name.slice(1) + ' scene'"
         )
 
-        icon-ph-plugs-connected(v-if="scene.name == 'index'")
-        icon-bx-tachometer(v-if="scene.name == 'level'")
-        icon-bi-flower1(v-if="scene.name == 'rose'")
-        icon-la-plus(v-if="scene.name == 'cross'")
-        icon-ri-donut-chart-fill(v-if="scene.name == 'donut'")
-        icon-ic-outline-bar-chart(v-if="scene.name == 'stats'")
-        icon-ph-spiral(v-if="scene.name == 'spiral'")
+        icon-ph-tree(v-if="scene.name == 'xmas'")
+        icon-ph-camera(v-if="scene.name == 'panorama'")
+        icon-ph-flower(v-if="scene.name == 'rosePetals'")
 //debug
 </template>
 
@@ -141,5 +130,21 @@ onMounted(() => {
 
 .panel {
   @apply absolute p-4 m-4 bg-light-300 dark-bg-dark-300 z-20 flex flex-col gap-2 bg-opacity-90 dark-bg-opacity-90 flex items-center shadow-lg rounded-xl overflow-hidden right-2 bottom-2 max-w-sm overflow-y-scroll max-h-80vh;
+}
+
+.source-toggle {
+  @apply fixed top-5 right-5 z-50 cursor-pointer bg-black/70 border-2 border-white/30 rounded-full px-4 py-2 flex items-center gap-2 transition-all duration-300 text-white backdrop-blur;
+
+  .toggle-icon {
+    @apply text-2xl;
+  }
+
+  .toggle-text {
+    @apply font-bold uppercase tracking-wider;
+  }
+
+  &:hover {
+    @apply scale-105 bg-black/80 border-white/50 shadow-lg shadow-white/20;
+  }
 }
 </style>
